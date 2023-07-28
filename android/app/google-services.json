@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "598219060057",
+    "project_id": "yarytefitdev",
+    "storage_bucket": "yarytefitdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598219060057:android:b123319201af3ee3809248",
+        "android_client_info": {
+          "package_name": "com.dev.yarytefit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598219060057-n5uoekahve7tl1nfr4odbjeh69a6trds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmw7eJjm-_ilFwDydlFpTxQaLqSlConsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598219060057-n5uoekahve7tl1nfr4odbjeh69a6trds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
