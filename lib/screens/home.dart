@@ -1,134 +1,96 @@
-
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:yarytefit/components/workout_active.dart';
+import 'package:yarytefit/components/workouts_list.dart';
 import 'package:yarytefit/domain/workout.dart';
-import 'package:yarytefit/sevices/auth.dart';
+import 'package:yarytefit/screens/add-workout-week.dart';
+import 'package:yarytefit/screens/add-workout.dart';
+import 'package:yarytefit/services/auth.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+class HomePage extends StatefulWidget {
   
+  HomePage();
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectionIndex = 0;
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  WorkoutSchedule? workout; // Добавьте это
+
+    @override
+  void initState() {
+    super.initState();
+    workout = WorkoutSchedule(
+      uid: '',
+      author: '',
+      title: '',
+      description: '',
+      level: '',
+      weeks: []
+    );
+  }
+
+  _changeTab(int index) {
+    setState(() {
+      selectionIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var curvedNavigationBar = CurvedNavigationBar(
+        items: const [
+          Icon(Icons.fitness_center),
+          Icon(Icons.search),
+        ],
+        key: _bottomNavigationKey,
+        index: selectionIndex,
+        height: 50,
+        color: Colors.white.withOpacity(0.5),
+        buttonBackgroundColor: Colors.white,
+        backgroundColor: Colors.blueAccent,
+        animationCurve: Curves.bounceInOut,
+        animationDuration: const Duration(milliseconds: 500),
+        onTap: (index)=> _changeTab(index),
+        );
+        
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: const Text('やり手 FIT'),
+        title: Text('やり手 FIT : ${selectionIndex==0 ? 'Active Workouts' : 'Find Workouts'}'),
         leading: const Icon(Icons.fitness_center),
         actions: [
           TextButton.icon(
-            onPressed: () async { await AuthService().logOut(); 
-            } , 
-        icon: Icon(Icons.supervised_user_circle), 
-        label: SizedBox.shrink()
-        )
+              onPressed: () async {
+                await AuthService().logOut();
+              },
+              icon: const Icon(Icons.supervised_user_circle),
+              label: const SizedBox.shrink())
         ],
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: WorkoutList(),
+      body: selectionIndex==0 ? ActiveWorkouts() : WorkoutsList(),
+      bottomNavigationBar: curvedNavigationBar,
+floatingActionButton: FloatingActionButton(
+  backgroundColor: Colors.grey,
+  foregroundColor: Theme.of(context).primaryColor,
+  onPressed: () async {
+    var week = await Navigator.push<WorkoutWeek>(
+      context,
+      MaterialPageRoute(builder: (ctx) => AddWorkout(workoutSchedule: workout,)),
+    );
+    if (week != null) {
+      setState(() {
+        workout!.weeks.add(week);
+      });
+    }
+  },
+  child: const Icon(Icons.add),
+),
+
     );
   }
-}
-
-class WorkoutList extends StatelessWidget {
-  final workouts = <Workout>[
-    Workout(
-        title: 'Text1',
-        autor: 'YARYTЭ1',
-        description: 'Test Workout1',
-        level: 'Beginner'),
-    Workout(
-        title: 'Text2',
-        autor: 'YARYTЭ2',
-        description: 'Test Workout2',
-        level: 'Intermediate'),
-    Workout(
-        title: 'Text3',
-        autor: 'YARYTЭ3',
-        description: 'Test Workout3',
-        level: 'Advansed'),
-    Workout(
-        title: 'Text4',
-        autor: 'YARYTЭ4',
-        description: 'Test Workout4',
-        level: 'Beginner'),
-    Workout(
-        title: 'Text5',
-        autor: 'YARYTЭ5',
-        description: 'Test Workout5',
-        level: 'Intermediate'),
-  ];
-
-    @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-          itemCount: workouts.length,
-          itemBuilder: (context, i) {
-            return Card(
-              elevation: 2.0,
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Container(
-                decoration:
-                    const BoxDecoration(color: Color.fromRGBO(50, 65, 85, .8)),
-                child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    leading: Container(
-                      padding: const EdgeInsets.only(right: 12),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              right: BorderSide(width: 1,color: Colors.white38)
-                            )
-                          ),
-                      child:
-                          const Icon(Icons.fitness_center_sharp, color: Colors.white),
-                    ),
-                    textColor: Colors.white,
-                    title: Text(workouts[i].title),
-                    trailing: const Icon(Icons.keyboard_arrow_right,color: Colors.white,),
-                    subtitle: subtitle(context,workouts[i]),
-                    ),
-                    
-              ),
-            );
-          }),
-    );
-  }
-}
-
-Widget subtitle(BuildContext context, Workout workout){
-  var color = Colors.grey;
-
-  double indlev = 0;
-  switch(workout.level){
-    case 'Beginner':
-    color = Colors.green;
-    indlev = 0.33;
-    break;
-  
-    case 'Intermediate':
-    color = Colors.yellow;
-    indlev = 0.66;
-    break;
-      case 'Advansed':
-    color = Colors.red;
-    indlev = 1;
-    break;
-   }
-  return Row(
-    children: <Widget>[
-      Expanded( 
-      flex: 1,
-      child: LinearProgressIndicator(
-      backgroundColor: Colors.white,
-      value: indlev,
-      valueColor: AlwaysStoppedAnimation(color),
-      )
-      ),
-      const SizedBox(width: 10,),
-      Expanded(flex: 3,
-      child: Text(workout.level, style: const TextStyle(color: Colors.white60),),
-      )
-    ]
-    
-  );
 }

@@ -6,7 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:yarytefit/domain/myuser.dart';
 
 import 'package:yarytefit/screens/landing.dart';
-import 'package:yarytefit/sevices/auth.dart';
+import 'package:yarytefit/services/auth.dart';
+
+// Old Widget 	Old Theme 	New Widget 	New Theme
+// FlatButton 	ButtonTheme 	TextButton 	TextButtonTheme
+// RaisedButton 	ButtonTheme 	ElevatedButton 	ElevatedButtonTheme
+// OutlineButton 	ButtonTheme 	OutlinedButton 	OutlinedButtonTheme
 
 void main() async {
   // start Так себе надувательство :))))

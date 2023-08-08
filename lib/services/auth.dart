@@ -11,12 +11,12 @@ class Users {
 class AuthService {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
-  Users? _userFromFirebase(User user) {
-    if (user == null) {
-      return null;
-    }
-    return Users(uid: user.uid);
-  }
+  // Users? _userFromFirebase(User user) {
+  //   if (user == null) {
+  //     return null;
+  //   }
+  //   return Users(uid: user.uid);
+  // }
 
   Future<MyUser?> signInWithEmailAndPassword(
       String email, String password) async {

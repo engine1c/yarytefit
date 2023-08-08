@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:yarytefit/domain/myuser.dart';
 import 'package:yarytefit/screens/auth.dart';
 import 'package:yarytefit/screens/home.dart';
-import 'package:yarytefit/sevices/auth.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
