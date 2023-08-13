@@ -1,16 +1,18 @@
 //import 'package:flutter/cupertino.dart';
 
 class Workout {
-  late final String id;
+  late String id;
   late String title;
   late String author;
   late String description;
   late String level;
   late bool isOnline;
 
-  Workout( {required this.id,  required this.title,  required this.author, required  this.description,  required this.level, required this.isOnline});
+  Workout( {required this.id,  required this.title,  required this.author, 
+            required  this.description,  required this.level, required this.isOnline});
 
-  Workout.fromJson(Map<String, dynamic> data,  {required String id}) {
+  Workout.fromJson( String uid, Map<String, dynamic> data) {
+    this.id = uid;
     title = data['title'];
     author = data['author'];
     description = data['description'];
@@ -25,7 +27,6 @@ class WorkoutSchedule {
   late String description;
   late String level;
   List<WorkoutWeek> weeks = []; // Инициализация пустым списком
-
   //List<WorkoutWeek> weeks;
 
   WorkoutSchedule(
@@ -68,7 +69,8 @@ class WorkoutSchedule {
     };
   }
 
-  WorkoutSchedule.fromJson( this.uid, Map<String, dynamic> data) {
+  WorkoutSchedule.fromJson( String uid, Map<String, dynamic> data) {
+     this.uid = uid;
     title = data['title'];
     author = data['author'];
     description = data['description'];
@@ -96,15 +98,17 @@ class WorkoutWeek {
 
   Map<String, dynamic> toMap() {
     return {
-      "notes": notes,
       "days": days.map((w) => w.toMap()).toList(),
+      "notes": notes,
+
     };
   }
 
   WorkoutWeek.fromJson(Map<String, dynamic> value) {
-    notes = value['notes'];
     days =
         (value['days'] as List).map((w) => WorkoutWeekDay.fromJson(w)).toList();
+         notes = value['notes'];
+
   }
 }
 
@@ -120,7 +124,7 @@ class WorkoutWeekDay {
       ?  (drillBlocks.where((b) => b is! WorkoutRestDrillBlock).toList().indexOf(block))
       : -1;
 
-  WorkoutWeekDay({required this.drillBlocks, required this.notes});
+  WorkoutWeekDay({required this.notes, required this.drillBlocks, });
 
   WorkoutWeekDay copy() {
     var copiedBlocks = drillBlocks.map((w) => w.copy()).toList();

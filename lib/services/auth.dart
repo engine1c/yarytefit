@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yarytefit/domain/myuser.dart';
 
-class Users {
-  final String uid;
+// class Users {
+//   final String uid;
 
-  Users({required this.uid});
-}
+//   Users({required this.uid});
+// }
 
 class AuthService {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;

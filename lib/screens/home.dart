@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:yarytefit/components/workout_active.dart';
 import 'package:yarytefit/components/workouts_list.dart';
+import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/domain/workout.dart';
 import 'package:yarytefit/screens/add-workout-week.dart';
 import 'package:yarytefit/screens/add-workout.dart';
@@ -49,8 +50,8 @@ class _HomePageState extends State<HomePage> {
         key: _bottomNavigationKey,
         index: selectionIndex,
         height: 50,
-        color: Colors.white.withOpacity(0.5),
-        buttonBackgroundColor: Colors.white,
+        color: bgColorWhite,
+        buttonBackgroundColor: bgWhite,
         backgroundColor: Colors.blueAccent,
         animationCurve: Curves.bounceInOut,
         animationDuration: const Duration(milliseconds: 500),
@@ -74,11 +75,12 @@ class _HomePageState extends State<HomePage> {
       ),
       body: selectionIndex==0 ? ActiveWorkouts() : WorkoutsList(),
       bottomNavigationBar: curvedNavigationBar,
+
 floatingActionButton: FloatingActionButton(
   backgroundColor: Colors.grey,
   foregroundColor: Theme.of(context).primaryColor,
   onPressed: () async {
-    var week = await Navigator.push<WorkoutWeek>(
+    var week = await Navigator.push(
       context,
       MaterialPageRoute(builder: (ctx) => AddWorkout(workoutSchedule: workout,)),
     );
@@ -93,4 +95,17 @@ floatingActionButton: FloatingActionButton(
 
     );
   }
+
+// class WorkoutDetails extends StatefulWidget {
+//   final String id;
+//   WorkoutDetails({Key? key, required this.id}) : super(key: key);
+
+//   @override
+//   _WorkoutDetailsState createState() => _WorkoutDetailsState();
+// }
+
+// class _WorkoutDetailsState extends State<WorkoutDetails> {
+//   // ... (your existing _WorkoutDetailsState code here)
+// }
+
 }

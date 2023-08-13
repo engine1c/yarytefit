@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:yarytefit/components/common/workout-level.dart';
+import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/screens/workout-details.dart';
 import 'package:yarytefit/domain/myuser.dart';
 import 'package:yarytefit/domain/workout.dart';
@@ -18,6 +19,7 @@ class WorkoutsList extends StatefulWidget {
 
 class _WorkoutsListState extends State<WorkoutsList> {
   late MyUser user;
+  DatabaseService db = DatabaseService();
 
   @override
   void initState() {
@@ -27,14 +29,13 @@ class _WorkoutsListState extends State<WorkoutsList> {
 
   @override
   void dispose(){
-  print('unsubscribing');
+  print('unsubscribing: workoutsStreamSubscription');
     workoutsStreamSubscription.cancel();
     super.dispose();
   }
-
-  var db = DatabaseService();
+  
   late StreamSubscription<List<Workout>> workoutsStreamSubscription;
-  var workouts = <Workout>[];
+  late var workouts = <Workout>[];
 
   var filterHeight = 0.0;
   var filterText = '';
@@ -79,7 +80,7 @@ class _WorkoutsListState extends State<WorkoutsList> {
 
     var filterInfo = Container(
       margin: const EdgeInsets.only(top: 3, left: 7, right: 7, bottom: 5),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
+      decoration: BoxDecoration(color: bgWhite.withOpacity(0.5)),
       height: 40,
       child: ElevatedButton(
         child: Row(
@@ -155,7 +156,7 @@ class _WorkoutsListState extends State<WorkoutsList> {
                       ),
                       child: const Text(
                         'Apply',
-                        style: TextStyle(color: Colors.white),),
+                        style: TextStyle(color: bgWhite),),
                     ),
                   ),
                     const SizedBox(width: 10),
@@ -170,7 +171,7 @@ class _WorkoutsListState extends State<WorkoutsList> {
                         ),
                         child: const Text(
                           'Clear',
-                            style: TextStyle(color: Colors.white),),
+                            style: TextStyle(color: bgWhite),),
                       ),
                     ),
                 ],
@@ -184,13 +185,23 @@ class _WorkoutsListState extends State<WorkoutsList> {
       child: ListView.builder(
           itemCount: workouts.length,
           itemBuilder: (context, i) {
-            return InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => 
-                  WorkoutDetails(id:workouts[i].id))
-                  );
-              },
+            return
+            InkWell(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => WorkoutDetails(id: workouts[i].id),
+      ),
+    );
+  },
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute(builder: (ctx) => 
+            //       WorkoutDetails(id:workouts[i].id))
+            //       );
+            //   },
               child: Card(
                 key: Key(workouts[i].id),
                 elevation: 2.0,
@@ -206,16 +217,17 @@ class _WorkoutsListState extends State<WorkoutsList> {
                           border: Border(
                               right:
                                   BorderSide(width: 1, color: Colors.white24))),
-                      child: Icon(Icons.fitness_center,
-                          color: Theme.of(context).textTheme.titleLarge?.color),
+                      child: const Icon(Icons.fitness_center,
+                          color: Colors.white54),// Theme.of(context).textTheme.titleLarge?.color),
                     ),
                     title: Text(workouts[i].title,
-                        style: TextStyle(
-                            color: Theme.of(context).textTheme.titleLarge?.color,
+                        style: const TextStyle(
+                            color: bgWhite,// Theme.of(context).textTheme.titleLarge?.color,
                             fontWeight: FontWeight.bold)),
-                    trailing: Icon(Icons.keyboard_arrow_right,
-                        color: Theme.of(context).textTheme.titleLarge?.color),
-                    subtitle: WorkoutLevel(level: workouts[i].level),
+                    trailing: const Icon(Icons.keyboard_arrow_right,
+                        color: bgWhite),//.of(context).textTheme.titleLarge?.color),
+                    subtitle: 
+                    Container(color: Colors.white24,child: WorkoutLevel(level: workouts[i].level),), 
                   ),
                 ),
               ),

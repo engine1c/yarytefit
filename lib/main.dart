@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/domain/myuser.dart';
 
 import 'package:yarytefit/screens/landing.dart';
@@ -64,9 +65,9 @@ class YaryteFitApp extends StatelessWidget {
                 title: 'YARYTЭ Fitness',
                 theme: ThemeData(
                   primaryColor: const Color.fromRGBO(50, 65, 85, 1),
-                  textTheme: const TextTheme(titleMedium: TextStyle(color: Colors.white)),
+                  textTheme: const TextTheme(titleMedium: TextStyle(color: bgWhite)),
                 ),
-                home: LandingPage(),
+                home: const LandingPage(),
               ),
             );
           }

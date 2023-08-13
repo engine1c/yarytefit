@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/services/auth.dart';
 
 class AuthPage  extends StatefulWidget {
@@ -27,7 +28,7 @@ class _authorizationPageState extends State<AuthPage > {
         padding: const EdgeInsets.only(top: 100),
         child: Container(
           child: const Align(
-            child: Text('yaryte***fit', style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white,)
+            child: Text('yaryte***fit', style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: bgWhite,)
           )
         )
       )
@@ -40,12 +41,12 @@ class _authorizationPageState extends State<AuthPage > {
         child: TextField(
           controller: controller,
           obscureText: obscure,
-          style: const TextStyle(fontSize: 20, color: Colors.white),
+          style: const TextStyle(fontSize: 20, color: bgWhite),
           decoration: InputDecoration(
             hintStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
             hintText: hint,
             focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white, width: 3)
+              borderSide: BorderSide(color: bgWhite, width: 3)
             ),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white54, width: 1)
@@ -53,7 +54,7 @@ class _authorizationPageState extends State<AuthPage > {
             prefixIcon: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: IconTheme(
-                data: const IconThemeData(color: Colors.white),
+                data: const IconThemeData(color: bgWhite),
                 child: icon
               )
             )
@@ -112,7 +113,7 @@ class _authorizationPageState extends State<AuthPage > {
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
-          textColor: Colors.white,
+          textColor: bgWhite,
           fontSize: 16.0
         );
       } else{
@@ -135,7 +136,7 @@ class _authorizationPageState extends State<AuthPage > {
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
-          textColor: Colors.white,
+          textColor: bgWhite,
           fontSize: 16.0
         );
       } else{
@@ -152,7 +153,7 @@ class _authorizationPageState extends State<AuthPage > {
           child: ClipPath(
             clipper: BottomWaveClipper(),
             child: Container(
-              color: Colors.white,
+              color: bgWhite,
               height: 300,
             ),
           ),
@@ -174,7 +175,7 @@ class _authorizationPageState extends State<AuthPage > {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: GestureDetector(
-                    child: const Text('Not registered yet? Register!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                    child: const Text('Not registered yet? Register!', style: TextStyle(fontSize: 20, color: bgWhite)),
                     onTap:() {
                       setState((){
                         showLogin = false;
@@ -190,7 +191,7 @@ class _authorizationPageState extends State<AuthPage > {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: GestureDetector(
-                    child: const Text('Already registered? Login!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                    child: const Text('Already registered? Login!', style: TextStyle(fontSize: 20, color: bgWhite)),
                     onTap:() {
                       setState((){
                         showLogin = true;

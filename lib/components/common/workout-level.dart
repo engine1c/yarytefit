@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:yarytefit/core/constants.dart';
 
 class WorkoutLevel extends StatelessWidget {
   final String level;
   const WorkoutLevel({Key? key, required this.level}) : super(key: key);
 
 Widget getLevel(BuildContext context, String level) {
-  var color = Colors.grey;
+  var color = bgWhite;
   double indicatorLevel = 0;
 
   switch (level) {
@@ -28,14 +29,14 @@ Widget getLevel(BuildContext context, String level) {
       Expanded(
           flex: 1,
           child: LinearProgressIndicator(
-              backgroundColor: Theme.of(context).textTheme.titleLarge?.color,
+              backgroundColor: bgWhite,// Theme.of(context).textTheme.titleLarge?.color,
               value: indicatorLevel,
               valueColor: AlwaysStoppedAnimation(color))),
       const SizedBox(width: 10),
       Expanded(
           flex: 3,
           child: Text(level,
-              style: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color)))
+              style: const TextStyle(color: bgWhite ))),//Theme.of(context).textTheme.titleLarge?.color)))
     ],
   );
 }

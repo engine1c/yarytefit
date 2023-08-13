@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 Widget drillRemoveAlert(BuildContext context) {
   return AlertDialog(
-    title: const Text('Remove Drill'),
+    title: const Text('Удалить тренировку'),
     content: const Text(
-      'Do you want to remove this Drill?',
+      'Вы хотите удалить эту Тренировку??',
       style: TextStyle(fontSize: 20.0),
     ),
     actions: <Widget>[

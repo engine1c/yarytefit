@@ -96,11 +96,11 @@ class _addWorkoutWeekState extends State<AddWorkoutWeek> {
                               ),
                       ),
                       title: Text(
-                          'Day ${i + 1} - ${week.days[i].isSet
+                          'День(1) ${i + 1} - ${week.days[i].isSet
                                   ? '${week.days[i].notRestDrillBlocksCount} drills'
-                                  : 'Rest Day'}',
-                          style: TextStyle(
-                              color: Theme.of(context).textTheme.titleLarge?.color,
+                                  : 'День отдыха'}',
+                          style: const TextStyle(
+                              color: bgWhite,
                               fontWeight: FontWeight.bold)),
                       trailing: Icon(Icons.keyboard_arrow_right,
                           color: Theme.of(context).textTheme.titleLarge?.color),

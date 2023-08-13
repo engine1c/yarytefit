@@ -165,7 +165,7 @@ void _addDrillsBlock() {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: bgWhite,
         onPressed: _newDrillTypeDialog,
         child: const Icon(Icons.add),
       ),
@@ -390,7 +390,7 @@ void _addDrillsBlock() {
                     : block.restBetweenRoundsMin.toString(),
                 name: "restBetweenRoundsMin_$index",
                 decoration: const InputDecoration(
-                  labelText: "Rest between rounds in minutes *",
+                  labelText: "Отдых между раундами в минутах *",
                 ),
                 onChanged: (dynamic val) {
                   if (isNumeric(val)) {

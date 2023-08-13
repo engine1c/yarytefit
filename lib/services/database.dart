@@ -6,39 +6,53 @@ class DatabaseService{
   final CollectionReference _workoutScheduleCollection = FirebaseFirestore.instance.collection('workoutSchedules');
 
   Future addOrUpdateWorkout(WorkoutSchedule schedule) async {
-     if (schedule.uid.isNotEmpty) {
+   
+  if (schedule.uid.isEmpty) {
+    // Если UID пустой, генерируем новый уникальный ID
+    schedule.uid = _workoutCollection.doc().id;}
+
     DocumentReference workoutRef = _workoutCollection.doc(schedule.uid);
 
     return workoutRef.set(schedule.toWorkoutMap()).then((_) async{
       var docId = workoutRef.id;
       await _workoutScheduleCollection.doc(docId).set(schedule.toMap());
     });
-      } else {
-    throw Exception("schedule.uid is empty or null");
-  }
-  }
+  //    if (schedule.uid.isNotEmpty) {   } else {
+  //   throw Exception("schedule.uid is empty or null");
+  // }
+   }
 
   Stream<List<Workout>> getWorkouts({required String level, required String author})
   {
     Query query;
-    if(author != null) {
+    if(author != '') {
       query = _workoutCollection.where('author', isEqualTo: author);
     } else {
       query = _workoutCollection.where('isOnline', isEqualTo: true);
     }
+if(level != '') {
+  query = query.where('level', isEqualTo: level);
+}
 
-    query = query.where('level', isEqualTo: level);
+// print('Query:${query.parameters.values.map((e) => e)}');
+// print('level:${(level)}-');
+// print('author:${author.toString()}-');
+//query = query.orderBy('isOnline', descending: true);
 
-      //query = query.orderBy('createdOn', descending: true);
+return query.snapshots().map((QuerySnapshot data) {
+  print('Number of documents: ${data.docs.length}');
+  return data.docs.map((DocumentSnapshot doc) {
+    final id = doc.id;
+    final data = doc.data() as Map<String, dynamic>;
+    return Workout.fromJson(id, data);
+  }).toList();
+});
 
-    return query.snapshots().map((QuerySnapshot data) =>
-        data.docs.map((DocumentSnapshot doc) => 
-        Workout.fromJson(doc.data as Map<String, dynamic>, id: doc.id)).toList());
   }
 
   Future<WorkoutSchedule> getWorkout(String id) async{
     var doc = await _workoutScheduleCollection.doc(id).get();
     return 
-    WorkoutSchedule.fromJson(doc.id, doc.data as Map<String, dynamic>);
+    WorkoutSchedule.fromJson(doc.id, doc.data() as Map<String, dynamic>);
   }
 }

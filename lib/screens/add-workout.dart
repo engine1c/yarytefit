@@ -48,7 +48,7 @@ class _AddWorkoutState extends State<AddWorkout> {
 
       //print(workout.toMap());
       if (workout.uid == null || workout.uid.isEmpty)  {
-  workout.uid = user.id;
+  //workout.uid = user.id;
   workout.author = user.id;
       }
 
@@ -235,11 +235,8 @@ class _AddWorkoutState extends State<AddWorkout> {
                         ),
                         title: Text(
                             'Week ${workout.weeks.indexOf(mWeek) + 1} - ${mWeek.daysWithDrills} Training Days',
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .color,
+                            style: const TextStyle(
+                                color: bgWhite,
                                 fontWeight: FontWeight.bold)),
                         trailing: Icon(Icons.keyboard_arrow_right,
                             color:

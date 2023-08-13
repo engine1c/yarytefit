@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yarytefit/core/constants.dart';
 
 class SaveButton extends StatelessWidget {
   final Function onPressed;
@@ -9,7 +10,7 @@ class SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-    foregroundColor: Colors.white, 
+    foregroundColor: bgWhite, 
     backgroundColor: Colors.green, // foreground
   ),
               // style: RoundedRectangleBorder(

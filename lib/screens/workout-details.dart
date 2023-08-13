@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class WorkoutDetails extends StatefulWidget {
   final String id;
-  WorkoutDetails({Key? key, required this.id,}) : super(key: key);
+  const WorkoutDetails({Key? key, required this.id,}) : super(key: key);
 
   @override
   _WorkoutDetailsState createState() => _WorkoutDetailsState();
@@ -21,22 +21,39 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
   late WorkoutSchedule workout;
   late MyUser user;
   var db = DatabaseService();
+  bool isLoading = true; // Добавляем состояние загрузки
+
+
   @override
   void initState() {
     _loadWorkout();
     super.initState();
   }
 
-  void _loadWorkout() {
-    db.getWorkout(widget.id).then((w){
+
+// Future<void> _loadWorkout() async {
+//     final w = await db.getWorkout(widget.id);
+//     setState(() {
+//       workout = w;
+//     });
+//   }  
+  
+void _loadWorkout() {
+  db.getWorkout(widget.id).then((w) {
+    if (w != null) {
       setState(() {
         workout = w;
+        isLoading = false; // Помечаем загрузку завершенной
       });
-    });
-  }
+    } else {
+      // Обработка случая, когда данные не были загружены (например, вывод ошибки)
+      print("Ошибка: Данные не были загружены.");
+    }
+  });
+}
 
   bool _isAuthor() =>
-      user.id == workout.author;
+      user != null && workout != null && user.id == workout.author;
 
   Widget _buildHeader(BuildContext context) => Stack(children: <Widget>[
         Container(
@@ -66,12 +83,12 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: const Icon(Icons.arrow_back, color: Colors.white),
+                child: const Icon(Icons.arrow_back, color: Colors.amber),
               ),
               _isAuthor()
                   ? IconButton(
                       icon: const Icon(Icons.edit),
-                      color: Colors.white,
+                      color: bgWhite,
                       onPressed: () async {
                         var updatedWorkout =
                             await Navigator.push<WorkoutSchedule>(
@@ -95,12 +112,12 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
           const SizedBox(height: 60.0),
           Text(
             workout.title,
-            style: const TextStyle(color: Colors.white, fontSize: 30.0),
+            style: const TextStyle(color: bgWhite, fontSize: 30.0),
           ),
           const SizedBox(height: 20.0),
           Text(
             workout.description,
-            style: const TextStyle(color: Colors.white, fontSize: 20.0),
+            style: const TextStyle(color: bgWhite, fontSize: 20.0),
             maxLines: 5,
           ),
           const SizedBox(height: 20.0),
@@ -123,7 +140,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                   const Text(
                       'Relax, even machines need rest... well at least sometimes! Ok, ok, you can do some active recovery today',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: bgWhite,
                           fontSize: 14,
                           fontWeight: FontWeight.bold))
                 ]
@@ -138,7 +155,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
         title: Text(
           '${single ? '' : '${index + 1}) '}${drill.title}',
           style: TextStyle(
-              color: Colors.white,
+              color: bgWhite,
               fontSize: Theme.of(context).textTheme.titleLarge?.fontSize),
         ),
         subtitle: Row(
@@ -146,13 +163,13 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
           children: <Widget>[
             Text('${drill.sets}x${drill.reps}',
                 style: TextStyle(
-                    color: Colors.white,
+                    color: bgWhite,
                     fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
                     fontStyle: FontStyle.italic)),
             (drill.weight.isNotEmpty)
                 ? Text('with weight: ${drill.weight}',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize:
                             Theme.of(context).textTheme.titleLarge?.fontSize,
                         fontStyle: FontStyle.italic))
@@ -179,7 +196,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                 const Text(
                   'Single',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: bgWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -197,7 +214,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                 const Text(
                   'MultiSet',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: bgWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -214,12 +231,12 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
               children: <Widget>[
                 const Text('AMRAP',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),
                 Text('${amrapBlock.minutes} min',
                     style: const TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold)),
                 ...workoutDrills
@@ -235,13 +252,13 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
               children: <Widget>[
                 const Text('For Time',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),
                 forTimeBlock.rounds > 1
                     ? Text('${forTimeBlock.rounds} rounds',
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: bgWhite,
                             fontSize: 18,
                             fontWeight: FontWeight.bold))
                     : const SizedBox.shrink(),
@@ -249,17 +266,17 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                     ? Text(
                         '${forTimeBlock.restBetweenRoundsMin} min rest between rounds',
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: bgWhite,
                             fontSize: 18,
                             fontWeight: FontWeight.bold))
-                    : const Text('No Rest',
+                    : const Text('Нет отдыха',
                         style: TextStyle(
-                            color: Colors.white,
+                            color: bgWhite,
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
                 Text('${forTimeBlock.timeCapMin} min time cap',
                     style: const TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold)),
                 ...workoutDrills
@@ -275,17 +292,17 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
               children: <Widget>[
                 const Text('EMOM',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),
                 Text('every ${emomBlock.intervalMin} min',
                     style: const TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold)),
                 Text('for total ${emomBlock.timeCapMin} min',
                     style: const TextStyle(
-                        color: Colors.white,
+                        color: bgWhite,
                         fontSize: 18,
                         fontWeight: FontWeight.bold)),
                 ...workoutDrills
@@ -300,7 +317,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
               title: Text(
                   'Rest ${(block as WorkoutRestDrillBlock).timeMin} min',
                   style: const TextStyle(
-                      color: Colors.white,
+                      color: bgWhite,
                       fontSize: 18,
                       fontWeight: FontWeight.bold)),
             ));
@@ -322,7 +339,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                     child: Center(
                         child: Text('${index + 1}',
                             style: const TextStyle(
-                                color: Colors.white,
+                                color: bgWhite,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold))),
                   ),
@@ -336,7 +353,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
         children: week.days
             .map((day) => Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                  decoration: BoxDecoration(color: bgColorActive2),
+                  decoration: const BoxDecoration(color: bgColorActive2),
                   child: ExpansionTileCard(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                     baseColor: bgColorInactive,
@@ -361,17 +378,16 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                            'Day ${week.days.indexOf(day) + 1} - ${day.isSet
+                            'День(2) ${week.days.indexOf(day) + 1} - ${day.isSet
                                     ? '${day.notRestDrillBlocksCount} drills'
-                                    : 'Rest Day'}',
-                            style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.titleLarge?.color,
+                                    : 'День отдыха(2)'}',
+                            style: const TextStyle(
+                                color: bgWhite,
                                 fontWeight: FontWeight.bold)),
                         day.notes.isNotEmpty
                             ? IconButton(
                                 icon: const Icon(Icons.info),
-                                color: Colors.white,
+                                color: bgWhite,
                                 onPressed: () {
                                   _showNotes(
                                       'Day ${week.days.indexOf(day) + 1} notes',
@@ -436,20 +452,17 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          'Week ${workout.weeks.indexOf(week) + 1} - ${week.daysWithDrills} Training Days',
-                          style: TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.color,
+                          'Неделя ${workout.weeks.indexOf(week) + 1} - ${week.daysWithDrills} Тренировочные дни',
+                          style: const TextStyle(
+                              color: bgWhite,
                               fontWeight: FontWeight.bold)),
                       week.notes.isNotEmpty
                           ? IconButton(
                               icon: const Icon(Icons.info),
-                              color: Colors.white,
+                              color: bgWhite,
                               onPressed: () {
                                 _showNotes(
-                                    'Week ${workout.weeks.indexOf(week) + 1} notes',
+                                    'Неделя(Прим) ${workout.weeks.indexOf(week) + 1} notes',
                                     week.notes);
                               },
                             )
@@ -467,8 +480,8 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
-        body: workout == null
-            ? const Center(child: CircularProgressIndicator())
+      body: isLoading // Показываем индикатор загрузки, если данные еще не загружены
+          ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
