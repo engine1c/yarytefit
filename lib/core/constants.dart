@@ -10,3 +10,4 @@ const Color bgColorActive3 = Color.fromRGBO(42, 53, 72, 1);
 final Color bgColorWhite = bgWhite.withOpacity(0.5);
 const Color bgWhite = Colors.white;
 const Color bgColorRest = Color(0xff4C8653);
+const Color edColorText =Colors.black87;

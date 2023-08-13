@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yarytefit/domain/myuser.dart';
@@ -10,6 +11,7 @@ import 'package:yarytefit/domain/myuser.dart';
 
 class AuthService {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
+final CollectionReference _userDataCollection = FirebaseFirestore.instance.collection("userData");
 
   // Users? _userFromFirebase(User user) {
   //   if (user == null) {
@@ -61,4 +63,15 @@ Stream<MyUser?> get currentUser  {
 return _fAuth.authStateChanges().map((User? user) => 
 user != null ? MyUser.fromFirebase(user):null);
 }
+
+  // Stream<MyUser> getCurrentUserWithData(MyUser user){
+  //   return _userDataCollection.doc(user.id).snapshots().map((snapshot)
+  //   {
+  //     if(snapshot.data == null) return null;
+
+  //     var userData = UserData.fromJson(snapshot.id, snapshot.data());
+  //     user.set(userData);
+  //     return user;
+  //   });
+  // }
 }

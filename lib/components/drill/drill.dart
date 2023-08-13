@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/domain/workout.dart';
 
 class Drill extends StatelessWidget {
@@ -34,7 +35,7 @@ class Drill extends StatelessWidget {
           child: Column(
             children: <Widget>[
               FormBuilderTextField(
-                style: const TextStyle(color: Colors.black87,),
+                style: const TextStyle(color:edColorText,),
                 initialValue: drill.title,
                 enabled: true,
                 enableInteractiveSelection: true,
@@ -48,16 +49,10 @@ class Drill extends StatelessWidget {
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(),
                   FormBuilderValidators.maxLength(100),
-                  // (val) {
-                  //   final number = int.tryParse(val!);
-                  //   if (number == null) return null;
-                  //   if (number < 0) return 'Не больше 100 (2)';
-                  //   return null;
-                  // }
                 ]),
               ),
               FormBuilderTextField(
-                style: const TextStyle(color: Colors.black87,),
+                style: const TextStyle(color:edColorText,),
                 initialValue: drill.sets == null ? '' : drill.sets.toString(),
                 name: "sets_${drillBlockIndex}_$index",
                 decoration: InputDecoration(
@@ -72,17 +67,11 @@ class Drill extends StatelessWidget {
                   FormBuilderValidators.numeric(
                       errorText: 'Не больше 100 (max_1)'),
                   FormBuilderValidators.max(100),
-                  // (val) {
-                  //   final number = int.tryParse(val!);
-                  //   if (number == null) return null;
-                  //   if (number < 0) return 'Не больше!';
-                  //   return null;
-                  // }
                 ]),
                 keyboardType: TextInputType.number,
               ),
               FormBuilderTextField(
-                style: const TextStyle(color: Colors.black87,),
+                style: const TextStyle(color:edColorText,),
                 initialValue: drill.reps == null ? '' : drill.reps.toString(),
                 name: "reps_${drillBlockIndex}_$index",
                 decoration: InputDecoration(
@@ -98,18 +87,11 @@ class Drill extends StatelessWidget {
                   FormBuilderValidators.numeric(
                       errorText: 'Не больше 500 (max_1)'),
                   FormBuilderValidators.max(500),
-    
-                  // (val) {
-                  //   final number = int.tryParse(val!);
-                  //   if (number == null) return null;
-                  //   if (number < 0) return 'Не больше!';
-                  //   return null;
-                  // }
                 ]),
                 // keyboardType: TextInputType.number,
               ),
               FormBuilderTextField(
-                style: const TextStyle(color: Colors.black87,),
+                style: const TextStyle(color:edColorText,),
                 initialValue: drill.weight,
                 name: "weight_${drillBlockIndex}_$index",
                 decoration: InputDecoration(
@@ -121,13 +103,8 @@ class Drill extends StatelessWidget {
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(),
                   FormBuilderValidators.maxLength(100),
-                  // (val) {
-                  //   final number = int.tryParse(val!);
-                  //   if (number == null) return null;
-                  //   if (number < 0) return 'Не больше 100 (3)';
-                  //   return null;
-                  // }
                 ]),
+                keyboardType: TextInputType.number,
               ),
             ],
           ),

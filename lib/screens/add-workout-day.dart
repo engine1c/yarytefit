@@ -274,6 +274,7 @@ void _addDrillsBlock() {
   Widget _buildDrillBlockParams(int index, WorkoutDrillsBlock block) {
        if (block is WorkoutAmrapDrillBlock) {
       return FormBuilder(
+        autovalidateMode: AutovalidateMode.disabled,
         key: _formKey,
         child: Card(
           child: Column(
@@ -281,6 +282,7 @@ void _addDrillsBlock() {
               Container(
                 padding: const EdgeInsets.only(left: 4, right: 4),
                 child: FormBuilderTextField(
+                  style: const TextStyle(color:edColorText,),
                   initialValue:
                       block.minutes == null ? '' : block.minutes.toString(),
                   name: "minutes_$index",
@@ -295,18 +297,7 @@ void _addDrillsBlock() {
                     FormBuilderValidators.numeric(
                         errorText: 'Не больше 100 (max_21)'),
                     FormBuilderValidators.max(100),
-                    (val) {
-                      final number = int.tryParse(val!);
-                      if (number == null) return null;
-                      if (number < 0) return 'Не больше!';
-                      return null;
-                    }
                   ]),
-                  // validator: [
-                  //   FormBuilderValidators.required(),
-                  //   FormBuilderValidators.max(100),
-                  //   FormBuilderValidators.numeric(),
-                  // ],
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -315,222 +306,175 @@ void _addDrillsBlock() {
         ),
       );
     } else if (block is WorkoutForTimeDrillBlock) {
-      return Card(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              child: FormBuilderTextField(
-                initialValue:
-                    block.timeCapMin == null ? '' : block.timeCapMin.toString(),
-                name: "timeCapMin_$index",
-                decoration: const InputDecoration(
-                  labelText: "Time Cap in minutes *",
+      return FormBuilder(
+        autovalidateMode: AutovalidateMode.disabled,
+        key: _formKey,
+        child: Card(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(left: 4, right: 4),
+                child: FormBuilderTextField(
+                 style: const TextStyle(color:edColorText,),
+                  initialValue:
+                      block.timeCapMin == null ? '' : block.timeCapMin.toString(),
+                  name: "timeCapMin_$index",
+                  decoration: const InputDecoration(
+                    labelText: "Time Cap in minutes *",
+                  ),
+                  onChanged: (dynamic val) {
+                    if (isNumeric(val)) block.timeCapMin = cleanInt(val);
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(
+                        errorText: 'Не больше 100 (max_22)'),
+                    FormBuilderValidators.max(100),
+                  ]),
+                  keyboardType: TextInputType.number,
                 ),
-                onChanged: (dynamic val) {
-                  if (isNumeric(val)) block.timeCapMin = cleanInt(val);
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(
-                      errorText: 'Не больше 100 (max_22)'),
-                  FormBuilderValidators.max(100),
-                  (val) {
-                    final number = int.tryParse(val!);
-                    if (number == null) return null;
-                    if (number < 0) return 'Не больше!';
-                    return null;
-                  }
-                ]),
-                // validator: [
-                //   FormBuilderValidators.required(),
-                //   FormBuilderValidators.max(100),
-                //   FormBuilderValidators.numeric(),
-                // ],
-                keyboardType: TextInputType.number,
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              child: FormBuilderTextField(
-                initialValue:
-                    block.rounds == null ? '' : block.rounds.toString(),
-                name: "rounds_$index",
-                decoration: const InputDecoration(
-                  labelText: "Rounds *",
+              Container(
+                padding: const EdgeInsets.only(left: 4, right: 4),
+                child: FormBuilderTextField(
+                  style: const TextStyle(color:edColorText,),
+                  initialValue:
+                      block.rounds == null ? '' : block.rounds.toString(),
+                  name: "rounds_$index",
+                  decoration: const InputDecoration(
+                    labelText: "Rounds *",
+                  ),
+                  onChanged: (dynamic val) {
+                    if (isNumeric(val)) block.rounds = cleanInt(val);
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(
+                        errorText: 'Не больше 100 (max_23)'),
+                    FormBuilderValidators.max(100),
+      
+                  ]),
+      
+                  keyboardType: TextInputType.number,
                 ),
-                onChanged: (dynamic val) {
-                  if (isNumeric(val)) block.rounds = cleanInt(val);
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(
-                      errorText: 'Не больше 100 (max_23)'),
-                  FormBuilderValidators.max(100),
-                  (val) {
-                    final number = int.tryParse(val!);
-                    if (number == null) return null;
-                    if (number < 0) return 'Не больше!';
-                    return null;
-                  }
-                ]),
-                // validator: [
-                //   FormBuilderValidators.required(),
-                //   FormBuilderValidators.max(100),
-                //   FormBuilderValidators.numeric(),
-                // ],
-                keyboardType: TextInputType.number,
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              child: FormBuilderTextField(
-                initialValue: block.restBetweenRoundsMin == null
-                    ? ''
-                    : block.restBetweenRoundsMin.toString(),
-                name: "restBetweenRoundsMin_$index",
-                decoration: const InputDecoration(
-                  labelText: "Отдых между раундами в минутах *",
+              Container(
+                padding: const EdgeInsets.only(left: 4, right: 4),
+                child: FormBuilderTextField(
+                  style: const TextStyle(color:edColorText,),
+                  initialValue: block.restBetweenRoundsMin == null
+                      ? ''
+                      : block.restBetweenRoundsMin.toString(),
+                  name: "restBetweenRoundsMin_$index",
+                  decoration: const InputDecoration(
+                    labelText: "Отдых между раундами в минутах *",
+                  ),
+                  onChanged: (dynamic val) {
+                    if (isNumeric(val)) {
+                      block.restBetweenRoundsMin = cleanInt(val);
+                    }
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(
+                        errorText: 'Не больше 100 (max_24)'),
+                    FormBuilderValidators.max(100),
+                  ]),
+                  keyboardType: TextInputType.number,
                 ),
-                onChanged: (dynamic val) {
-                  if (isNumeric(val)) {
-                    block.restBetweenRoundsMin = cleanInt(val);
-                  }
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(
-                      errorText: 'Не больше 100 (max_24)'),
-                  FormBuilderValidators.max(100),
-                  (val) {
-                    final number = int.tryParse(val!);
-                    if (number == null) return null;
-                    if (number < 0) return 'Не больше!';
-                    return null;
-                  }
-                ]),
-                // validator: [
-                //   FormBuilderValidators.required(),
-                //   FormBuilderValidators.max(100),
-                //   FormBuilderValidators.numeric(),
-                // ],
-                keyboardType: TextInputType.number,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     } else if (block is WorkoutEmomDrillBlock) {
-      return Card(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              child: FormBuilderTextField(
-                initialValue:
-                    block.timeCapMin == null ? '' : block.timeCapMin.toString(),
-                name: "timeCapMin_$index",
-                decoration: const InputDecoration(
-                  labelText: "Time Cap in minutes *",
+      return FormBuilder(
+        autovalidateMode: AutovalidateMode.disabled,
+        key: _formKey,
+        child: Card(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(left: 4, right: 4),
+                child: FormBuilderTextField(
+                  style: const TextStyle(color:edColorText,),
+                  initialValue:
+                      block.timeCapMin == null ? '' : block.timeCapMin.toString(),
+                  name: "timeCapMin_$index",
+                  decoration: const InputDecoration(
+                    labelText: "Time Cap in minutes *",
+                  ),
+                  onChanged: (dynamic val) {
+                    if (isNumeric(val)) block.timeCapMin = cleanInt(val);
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(
+                        errorText: 'Не больше 100 (max_25)'),
+                    FormBuilderValidators.max(100),
+                  ]),
+                  keyboardType: TextInputType.number,
                 ),
-                onChanged: (dynamic val) {
-                  if (isNumeric(val)) block.timeCapMin = cleanInt(val);
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(
-                      errorText: 'Не больше 100 (max_25)'),
-                  FormBuilderValidators.max(100),
-                  (val) {
-                    final number = int.tryParse(val!);
-                    if (number == null) return null;
-                    if (number < 0) return 'Не больше!';
-                    return null;
-                  }
-                ]),
-                // validator: [
-                //   FormBuilderValidators.required(),
-                //   FormBuilderValidators.max(100),
-                //   FormBuilderValidators.numeric(),
-                // ],
-                keyboardType: TextInputType.number,
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              child: FormBuilderTextField(
-                initialValue: block.intervalMin == null
-                    ? ''
-                    : block.intervalMin.toString(),
-                name: "intervalMin_$index",
-                decoration: const InputDecoration(
-                  labelText: "Interval length in minutes *",
+              Container(
+                padding: const EdgeInsets.only(left: 4, right: 4),
+                child: FormBuilderTextField(
+                  style: const TextStyle(color:edColorText,),
+                  initialValue: block.intervalMin == null
+                      ? ''
+                      : block.intervalMin.toString(),
+                  name: "intervalMin_$index",
+                  decoration: const InputDecoration(
+                    labelText: "Interval length in minutes *",
+                  ),
+                  onChanged: (dynamic val) {
+                    if (isNumeric(val)) block.intervalMin = cleanInt(val);
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(
+                        errorText: 'Не больше 100 (max_26)'),
+                    FormBuilderValidators.max(100),
+                  ]),
+                  keyboardType: TextInputType.number,
                 ),
-                onChanged: (dynamic val) {
-                  if (isNumeric(val)) block.intervalMin = cleanInt(val);
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(
-                      errorText: 'Не больше 100 (max_26)'),
-                  FormBuilderValidators.max(100),
-                  (val) {
-                    final number = int.tryParse(val!);
-                    if (number == null) return null;
-                    if (number < 0) return 'Не больше!';
-                    return null;
-                  }
-                ]),
-                // validator: [
-                //   FormBuilderValidators.required(),
-                //   FormBuilderValidators.max(100),
-                //   FormBuilderValidators.numeric(),
-                // ],
-                keyboardType: TextInputType.number,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     } else if (block is WorkoutRestDrillBlock) {
-      return Card(
+      return FormBuilder(
+        autovalidateMode: AutovalidateMode.disabled,
+        key: _formKey,
+        child: Card(
         child: Column(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              child: FormBuilderTextField(
-                initialValue:
-                    block.timeMin == null ? '' : block.timeMin.toString(),
-                name: "timeMin_$index",
-                decoration: const InputDecoration(
-                  labelText: "Minutes *",
-                ),
-                onChanged: (dynamic val) {
-                  if (isNumeric(val)) block.timeMin = cleanInt(val);
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(
-                      errorText: 'Не больше 100 (max_27)'),
-                  FormBuilderValidators.max(100),
-                  (val) {
-                    final number = int.tryParse(val!);
-                    if (number == null) return null;
-                    if (number < 0) return 'Не больше!';
-                    return null;
-                  }
-                ]),
-                // validator: [
-                //   FormBuilderValidators.required(),
-                //   FormBuilderValidators.max(100),
-                //   FormBuilderValidators.numeric(),
-                // ],
-                keyboardType: TextInputType.number,
-              ),
-            ),
-          ],
+        Container(
+          padding: const EdgeInsets.only(left: 4, right: 4),
+          child: FormBuilderTextField(
+            initialValue: block.timeMin == null ? '' : block.timeMin.toString(),
+            style: const TextStyle(color:edColorText,),
+            name: "timeMin_${index}_1", // Уникальное имя для первого виджета
+            enabled: true,
+            enableInteractiveSelection: true,
+            decoration: const InputDecoration(labelText: "Minutes ***"),
+            onChanged: (dynamic val) {
+              if (isNumeric(val)) block.timeMin = cleanInt(val);
+            },
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(),
+              FormBuilderValidators.numeric(errorText: 'Не больше 100 (max_27)'),
+              FormBuilderValidators.max(100),
+            ]),
+            keyboardType: TextInputType.number,
+          ),
         ),
+                  ],
+        ),
+      ),
       );
+
     }
 
     return const SizedBox.shrink();

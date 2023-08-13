@@ -390,7 +390,7 @@ void _loadWorkout() {
                                 color: bgWhite,
                                 onPressed: () {
                                   _showNotes(
-                                      'Day ${week.days.indexOf(day) + 1} notes',
+                                      'День ${week.days.indexOf(day) + 1} заметки',
                                       day.notes);
                                 },
                               )

@@ -98,7 +98,7 @@ class _AddWorkoutState extends State<AddWorkout> {
               child: Column(
                 children: <Widget>[
                   FormBuilderTextField(
-                    style: const TextStyle(color: Colors.black87,),
+                    style: const TextStyle(color:edColorText,),
                     initialValue: workout.title,
                     name: "title",
                     enabled: true,
@@ -117,7 +117,7 @@ class _AddWorkoutState extends State<AddWorkout> {
                     ]),
                   ),
                   FormBuilderDropdown(
-                    style: const TextStyle(color: Colors.black87,),
+                    style: const TextStyle(color:edColorText,),
                     name: "level",
                     decoration: const InputDecoration(
                       labelText: "Select Level*",
@@ -234,7 +234,7 @@ class _AddWorkoutState extends State<AddWorkout> {
                           ),
                         ),
                         title: Text(
-                            'Week ${workout.weeks.indexOf(mWeek) + 1} - ${mWeek.daysWithDrills} Training Days',
+                            'Неделя ${workout.weeks.indexOf(mWeek) + 1} - ${mWeek.daysWithDrills} Тренировочные дни',
                             style: const TextStyle(
                                 color: bgWhite,
                                 fontWeight: FontWeight.bold)),
