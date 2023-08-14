@@ -4,7 +4,7 @@ import 'package:yarytefit/core/constants.dart';
 class SaveButton extends StatelessWidget {
   final Function onPressed;
 
-  SaveButton({Key? key, required this.onPressed}) : super(key: key);
+  const SaveButton({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SaveButton extends StatelessWidget {
                 onPressed();
               },
               child:
-                  Icon(Icons.save),
+                  const Icon(Icons.save),
             );
   }
 }

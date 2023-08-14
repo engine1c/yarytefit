@@ -1,4 +1,4 @@
-package com.example.yarytefit
+package com.dev.yarytefit
 
 import io.flutter.embedding.android.FlutterActivity
 

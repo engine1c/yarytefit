@@ -4,7 +4,7 @@ Widget drillRemoveAlert(BuildContext context) {
   return AlertDialog(
     title: const Text('Удалить тренировку'),
     content: const Text(
-      'Вы хотите удалить эту Тренировку??',
+      'Вы хотите удалить эту Тренировку?',
       style: TextStyle(fontSize: 20.0),
     ),
     actions: <Widget>[
