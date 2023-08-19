@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yarytefit/domain/workout.dart';
-import 'package:yarytefit/domain/myuser.dart';
+
+class profuser{
+  late String id;
+  late UserData userData;
 
 // class MyUser{
 //   late String id;
@@ -9,13 +12,8 @@ import 'package:yarytefit/domain/myuser.dart';
 //   }
 // }
 
-class proUser{
-  late String id;
-  late UserData userData;
-  late MyUser user;
-
-  MyUser.fromFirebase(FirebaseUser? fUser){
-    id = fUser.uid;
+  profuser.fromFirebase(User? fUser){
+    id = fUser!.uid;
   }
 
   void setUserData(UserData userData){
@@ -31,8 +29,8 @@ class proUser{
 }
 
 class UserData {
-  String uid;
-  List<UserWorkout> workouts;
+  late String uid;
+  late List<UserWorkout> workouts;
 
   Map<String, dynamic> toMap(){
     return {
@@ -40,7 +38,7 @@ class UserData {
     };
   }
 
-  UserData();
+    UserData();
 
   UserData.fromJson(this.uid, Map<String, dynamic> data){
     if(data['workouts'] == null) {
@@ -55,19 +53,21 @@ class UserData {
 
 
   void addUserWorkout(UserWorkout userWorkout) {
-    workouts ??= <UserWorkout>[];
+    if(workouts == null) {
+      workouts = <UserWorkout>[];
+    }
 
     workouts.add(userWorkout);
   }
 }
 
 class UserWorkout{
-  String workoutId;
-  List<UserWorkoutWeek> weeks;
-  int lastWeek;
-  int lastDay;
-  int loadedOnMs;
-  int completedOnMs;
+  late String workoutId;
+  late List<UserWorkoutWeek> weeks;
+  late int lastWeek;
+  late int lastDay;
+  late int loadedOnMs;
+  late int completedOnMs;
 
   Map<String, dynamic> toMap() {
       return {
@@ -102,7 +102,7 @@ class UserWorkout{
 }
 
 class UserWorkoutWeek{
-  List<UserWorkoutDay> days;
+  late List<UserWorkoutDay> days;
 
   UserWorkoutWeek(this.days);
 
@@ -118,7 +118,7 @@ class UserWorkoutWeek{
 }
 
 class UserWorkoutDay{
-  int completedOnMs;
+  late int completedOnMs;
 
   UserWorkoutDay.empty();
 

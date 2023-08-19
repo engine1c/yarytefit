@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:yarytefit/components/common/workout-level.dart';
+import 'package:yarytefit/components/common/workout_level.dart';
 import 'package:yarytefit/core/constants.dart';
-import 'package:yarytefit/screens/workout-details.dart';
+import 'package:yarytefit/screens/workout_details.dart';
 import 'package:yarytefit/domain/myuser.dart';
 import 'package:yarytefit/domain/workout.dart';
 import 'package:yarytefit/services/database.dart';

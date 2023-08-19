@@ -12,11 +12,12 @@ class Workout {
             required  this.description,  required this.level, required this.isOnline});
 
   Workout.fromJson( String uid, Map<String, dynamic> data) {
-    this.id = uid;
+    id = uid;
     title = data['title'];
     author = data['author'];
     description = data['description'];
     level = data['level'];
+    isOnline = data['isOnline'];
   }
 }
 
@@ -40,11 +41,11 @@ class WorkoutSchedule {
   WorkoutSchedule copy() {
     var copiedWeeks = weeks.map((w) => w.copy()).toList();
     return WorkoutSchedule(
-        uid: this.uid,
-        author: this.author,
-        title: this.title,
-        level: this.level,
-        description: this.description,
+        uid: uid,
+        author: author,
+        title: title,
+        level: level,
+        description: description,
         weeks: copiedWeeks);
   }
 
@@ -69,9 +70,8 @@ class WorkoutSchedule {
     };
   }
 
-  WorkoutSchedule.fromJson( String uid, Map<String, dynamic> data) {
-     this.uid = uid;
-    title = data['title'];
+  WorkoutSchedule.fromJson( this.uid, Map<String, dynamic> data) {
+     title = data['title'];
     author = data['author'];
     description = data['description'];
     level = data['level'];

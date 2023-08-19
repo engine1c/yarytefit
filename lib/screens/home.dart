@@ -4,8 +4,8 @@ import 'package:yarytefit/components/workout_active.dart';
 import 'package:yarytefit/components/workouts_list.dart';
 import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/domain/workout.dart';
-import 'package:yarytefit/screens/add-workout-week.dart';
-import 'package:yarytefit/screens/add-workout.dart';
+import 'package:yarytefit/screens/add_workout_week.dart';
+import 'package:yarytefit/screens/add_workout.dart';
 import 'package:yarytefit/services/auth.dart';
 
 class HomePage extends StatefulWidget {

@@ -1,13 +1,13 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:yarytefit/components/common/workout-level.dart';
+import 'package:provider/provider.dart';
+
+import 'package:yarytefit/components/common/workout_level.dart';
 import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/domain/myuser.dart';
 import 'package:yarytefit/domain/workout.dart';
-import 'package:yarytefit/screens/add-workout.dart';
+import 'package:yarytefit/screens/add_workout.dart';
 import 'package:yarytefit/services/database.dart';
-import 'package:provider/provider.dart';
 
 class WorkoutDetails extends StatefulWidget {
   final String id;

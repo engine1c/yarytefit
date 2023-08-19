@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yarytefit/components/common/save-button.dart';
+import 'package:yarytefit/components/common/save_button.dart';
 import 'package:yarytefit/core/constants.dart';
 import 'package:yarytefit/domain/workout.dart';
-import 'package:yarytefit/screens/add-workout-day.dart';
+import 'package:yarytefit/screens/add_workout_day.dart';
 
 class AddWorkoutWeek extends StatefulWidget {
   final WorkoutWeek? week;
